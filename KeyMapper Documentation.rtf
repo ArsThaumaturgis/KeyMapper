@@ -1,0 +1,225 @@
+{\rtf1\ansi\deff3\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Times New Roman;}{\f1\froman\fprq2\fcharset2 Symbol;}{\f2\fswiss\fprq2\fcharset0 Arial;}{\f3\froman\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}{\f4\froman\fprq2\fcharset0 Arial;}{\f5\froman\fprq2\fcharset0 Times New Roman;}{\f6\fnil\fprq0\fcharset0 DejaVu Sans Mono;}{\f7\fnil\fprq2\fcharset0 Lohit Hindi;}{\f8\fnil\fprq2\fcharset0 Times New Roman;}{\f9\fnil\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}}
+{\colortbl;\red0\green0\blue0;\red0\green0\blue255;\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;\red0\green128\blue128;\red0\green128\blue0;\red128\green0\blue128;\red128\green0\blue0;\red128\green128\blue0;\red128\green128\blue128;\red192\green192\blue192;\red228\green228\blue255;}
+{\stylesheet{\s0\snext0\ql\nowidctlpar\hyphpar0\ltrpar\cf1\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\alang1081\loch\f5\fs24\lang7177 Normal;}
+{\s15\sbasedon0\snext16\ql\nowidctlpar\hyphpar0\sb240\sa120\keepn\ltrpar\cf1\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\loch\f4\fs28\lang7177 Heading;}
+{\s16\sbasedon0\snext16\ql\nowidctlpar\hyphpar0\sb0\sa120\ltrpar\cf1\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\loch\f5\fs24\lang7177 Text Body;}
+{\s17\sbasedon16\snext17\ql\nowidctlpar\hyphpar0\sb0\sa120\ltrpar\cf1\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\loch\f5\fs24\lang7177 List;}
+{\s18\sbasedon0\snext18\ql\nowidctlpar\hyphpar0\sb120\sa120\ltrpar\cf1\i\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\loch\f5\fs24\lang7177 Caption;}
+{\s19\sbasedon0\snext19\ql\nowidctlpar\hyphpar0\ltrpar\cf1\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\loch\f5\fs24\lang7177 Index;}
+{\s20\sbasedon0\snext20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177 Preformatted Text;}
+}{\*\generator LibreOffice/6.0.7.3$Linux_X86_64 LibreOffice_project/00m0$Build-3}{\info{\author Thaumaturge }{\creatim\yr2014\mo3\dy11\hr18\min31}{\author Thaumaturge }{\revtim\yr2019\mo5\dy9\hr19\min1}{\printim\yr0\mo0\dy0\hr0\min0}}{\*\userprops}\deftab709
+\hyphauto0\viewscale100
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse451\pgwsxn11906\pghsxn16838\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\pgdscnxt0 Default Style;}}
+\formshade{\*\pgdscno0}\paperh16838\paperw11906\margl1134\margr1134\margt1134\margb1134\sectd\sbknone\sectunlocked1\pgndec\pgwsxn11906\pghsxn16838\marglsxn1134\margrsxn1134\margtsxn1134\margbsxn1134\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+{\*\ftnsep\chftnsep}\pgndec\pard\plain \s0\ql\nowidctlpar\hyphpar0\ltrpar\cf1\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\alang1081\loch\f5\fs24\lang7177{\cf1\b\kerning1\dbch\af7\langfe1081\rtlch \ltrch\loch\fs24\lang7177
+KeyMapper--A module for handling and changing key-bindings}
+\par \pard\plain \s0\ql\nowidctlpar\hyphpar0\ltrpar\cf1\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\alang1081\loch\f5\fs24\lang7177{\cf1\b0\kerning1\dbch\af7\langfe1081\rtlch \ltrch\loch\fs20\lang7177
+v1.0}{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+ by Ian Eborn (Thaumaturge)}
+\par \pard\plain \s0\ql\nowidctlpar\hyphpar0\ltrpar\cf1\kerning1\dbch\af8\langfe1081\dbch\af9\afs24\alang1081\loch\f5\fs24\lang7177\cf1\b0\kerning1\dbch\af7\langfe1081\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+This module and related files are }{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+licensed under the MIT license. See the license file for details.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs24\lang7177
+Classes:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\fs20\lang7177
+ }{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- KeyMapper}{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+--The core class, intended to be instantiated by the user.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\fs20\lang7177
+ }{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- KeyBindingButtonWrapper}{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+--A template for the wrapper class used to hold and manage the buttons that display and allow modification of key-bindings. This class is a stub, and should be sub-classed, not instantiated.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\fs20\lang7177
+ }{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- BasicKeyBindingButtonWrapper}{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+--The sub-class of KeyBindingButtonWrapper used by the default implementation of the KeyMapper GUI.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\cf1\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\fs20\lang7177
+ }{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- KeyBinding}{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+--A representation of a key-binding. Used internally by KeyMapper.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\fs20\lang7177
+ }{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- AxisData}{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+--A representation of a control-axis being used by KeyMapper. Used internally by KeyMapper.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs24\lang7177
+General Use:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs24\lang7177
+\tab }{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+Setup:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab }{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+At its simplest, setting up KeyMapper involves three steps:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+1) Instantiate a KeyMapper object.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+2) Add your application's controls to the KeyMapper object, one at a time via the "addKey" method of the KeyMapper object.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+3) Call the "setup" method of the KeyMapper object.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\cf1\b\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li0\ri0\lin0\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab }{\cf1\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+In-game use:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+How you access the keys added to KeyMapper depends on the type of binding that you have chosen for a given key. There are four types:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+1) KEYMAP_HELD_KEY}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- This type represents a key that may be held down by the user, and which may be polled for its state or value; an example might be a movement key in a platformer. It can also represent an axis of a directional input, such as a thumbstick on a gamepad. In the case of directional inputs, each direction of the axis (i.e. positive and negative) is bound separately.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+These are polled by checking the relevant value in the KeyMapper object's "keys" variable. For example:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+self.myMapper.addKey("move right", "w"}{{\*\bkmkstart __DdeLink__79_77972704}\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+, InputDevice.DeviceClass.keyboard}{{\*\bkmkend __DdeLink__79_77972704}\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+, KEYMAP_HELD_KEY)}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+#Elsewhere, in an update task:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+dt = globalClock.getDt()}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+if self.myMapper.keys["move right"]:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab self.player.setX(self.player, self.playerSpeed*dt)}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+2) KEYMAP_EVENT_RELEASED}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- This type represents a key for which a callback method is called when the key is released. It requires an additional parameter to "addKey", specifying the method to be called; this method should take a parameter representing the key that has been released. For example:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+self.myMapper.addKey("snipe", "mouse1", InputDevice.DeviceClass.mouse, KEYMAP_EVENT_RELEASED, self.fireSniperRifle)}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+#Elsewhere:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+def fireSniperRifle(self, key):}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab self.player.shoot()}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+2) KEYMAP_EVENT_PRESSED}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- Similarly to the previous type, this type represents a key for which a callback method is called when the key is pressed. Likewise, it requires an additional parameter to "addKey", specifying the method to be called; this method should take a parameter representing the key that has been pressed. For example:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2836\ri0\lin2836\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+self.myMapper.addKey("heal", "h", KEYMAP_EVENT_PRESSED, InputDevice.DeviceClass.keyboard, self.heal)}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+#Elsewhere:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+def heal(self, key):}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{{\*\bkmkstart __DdeLink__200_1044432872}{\*\bkmkend __DdeLink__200_1044432872}\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab self.player.health += 5}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li1418\ri0\lin1418\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+3) KEYMAP_EVENT_PRESSED_AND_RELEASED}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+- This type is essentially a combination of the above two: a callback method is called on both the key's press }{\cf1\i\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+and}{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+ its release. One may use either two separate callbacks (provided to "addKey" in a list or tuple) or a single callback called for both; in the latter case an additional parameter should be taken by the method used, which KeyMapper should fill with either KEYMAP_EVENT_PRESSED or KEYMAP_EVENT_RELEASED, indicating whether the event was a button -press or -release. For example: }
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+self.myMapper.addKey("throw", "t", InputDevice.DeviceClass.keyboard, KEYMAP_EVENT_PRESSED_AND_RELEASED, [self.pullBackArm, self.releaseArm])}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+#Elsewhere:}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+def pullBackArm(self, key):}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab self.player.startThrowing()}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+def releaseArm(self, key):}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab self.player.finishThrowing()}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li2127\ri0\lin2127\rin0\fi0\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li0\ri0\lin0\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab }{\cf1\i0\b\kerning1\dbch\af8\langfe1025\ab\rtlch \ltrch\loch\fs20\lang7177
+Saving and loading bindings (including profiles):}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\ab0\rtlch \ltrch\loch\fs20\lang7177
+KeyMapper doesn't implement file-handling; it's expected that the developer will provide this, implemented as they prefer.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\ab0\rtlch \ltrch\loch\fs20\lang7177
+This is done via two callbacks--one for saving and one for loading--provided as parameters when constructing a KeyMapper object. }
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\ab0\rtlch \ltrch\loch\fs20\lang7177
+The save-callback is expected to take three parameters: a list of key-binding data, a list of axis-binding data, and a filename (specifically, a Panda3D Filename object) indicating the file to which to save. No return-value is expected.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\ab0\rtlch \ltrch\loch\fs20\lang7177
+The load-callback is expected to take a single parameter, being the filename (specifically, a Panda3D Filename object) indicating the file to load. It is expected to return a list of key-binding data and a list of axis-binding data, the same as those provided to the save-callback.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li0\ri0\lin0\rin0\fi0\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li0\ri0\lin0\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li0\ri0\lin0\rin0\fi0{\cf1\i0\b\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs24\lang7177
+Known Issues (as of v1.0):}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\cf1\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs20\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab }{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+With some devices attached, the first attempt to bind a key may automatically end up bound to the mouse-button. This seems to be an engine-level issue, and has been reported!}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab The default UI is only navigable by mouse; implementing navigation by other devices is left to the developer, should it be desired.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\rtlch \ltrch\loch
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab Key-combinations (that is, keys affected by modifiers such as alt or control--"alt-g", for example) are not properly supported (although they }{\cf1\i\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+should}{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+ work properly in the case of KEYMAP_EVENT_PRESSED). In short, the problem is that Panda doesn't provide key-released events for key combinations, and I have yet to find a way around this that doesn't look horribly awkward.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0\cf1\b0\kerning1\dbch\af8\langfe7177\rtlch \ltrch\loch\fs24\lang7177
+
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab Support for binding mouse-buttons involves a slight hack. For some reason Panda's dialogue boxes--or, more specifically, the backing provided by the Transition class (I think that it is), and which prevents the user from interacting with GUI items below the dialogue--seem to prevent mouse-press events from being emitted by the ButtonThrower. Strangely, this seems to }{\cf1\i\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+only}{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+ affect }{\cf1\i\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+mouse-press}{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+ events; key-press, key-release and mouse-release events all seem to work as expected.}
+\par \pard\plain \s20\ql\nowidctlpar\hyphpar0\sb0\sa0\ltrpar\cf1\kerning1\dbch\af8\langfe7177\dbch\af9\afs24\loch\f5\fs20\lang7177\li709\ri0\lin709\rin0\fi0{\cf1\i0\b0\kerning1\dbch\af8\langfe1025\rtlch \ltrch\loch\fs20\lang7177
+\tab For the moment the workaround currently in place seems to work without problem, but it may cause problems that I haven't yet encountered.}
+\par }
