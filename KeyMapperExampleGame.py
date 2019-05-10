@@ -39,11 +39,11 @@ from direct.task import Task
 
 ### KeyMapper importations.
 
-# The latter two are convenience functions
-# intended to enable the use of the GameSaver file-handling module.
-# If you don't want to use GameSaver, just replace these with your
-# own equivalents!
+# The latter importation provides dummy save- and load- callbacks,
+# so that the game doesn't produce frequent error-dialogues, and
+# does issue a warning on first startup.
 from KeyMapper import *
+from KeyMapperSaveLoadDummy import SaveLoadDummy
 
 ### Some basic Python importations
 
@@ -671,7 +671,7 @@ class KeyMapperTestGame(ShowBase):
         # our main menu.
         self.keyMapper = CustomisedKeyMapper(KEYMAP_USER_PROFILE_DIRECTORY + "currentBindings.btn",
                                              KEYMAP_DEFAULT_PROFILE_DIRECTORY, KEYMAP_USER_PROFILE_DIRECTORY,
-                                             self, None, None)
+                                             self, SaveLoadDummy.saveKeyMapping, SaveLoadDummy.loadKeyMapping)
 
         # Note the "axisDirection" parameter. This is only used for axial inputs--
         # things like gamepad thumb-sticks. A value of "1" indicates the positive

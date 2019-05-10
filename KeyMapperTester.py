@@ -32,7 +32,7 @@ import random
 # import KeyMapper!
 from KeyMapper import *
 
-from KeyMapperSaveLoadViaGameSaver import saveKeyMapping, loadKeyMapping
+from KeyMapperSaveLoadDummy import SaveLoadDummy
 
 class KeyMapperTester(ShowBase):
     def __init__(self):
@@ -43,7 +43,7 @@ class KeyMapperTester(ShowBase):
         # Set up a basic KeyMapper!
         self.keyMapper = KeyMapper("TesterUserProfiles/testBindings.btn",
                                    "TesterDefaultProfiles/", "TesterUserProfiles/",
-                                   self, None, None)
+                                   self, SaveLoadDummy.saveKeyMapping, SaveLoadDummy.loadKeyMapping)
         
         ## Here we inform our KeyMapper of the various keys that we use.
         ##  The list here is long simply to demonstrate various features,
