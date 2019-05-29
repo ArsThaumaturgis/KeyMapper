@@ -22,6 +22,7 @@ from direct.gui.DirectGui import *
 from panda3d.core import TextNode, PandaNode, ModifierButtons
 from panda3d.core import Filename, VirtualFileSystem
 from panda3d.core import InputDevice, ButtonThrower, InputDeviceNode
+from panda3d.core import BitMask32
 
 from direct.task import Task
 
@@ -138,6 +139,7 @@ class KeyBinding():
         self.deviceType = None
         self.defaultDeviceType = None
         self.axisDirection = 0
+        self.groupID = BitMask32(1)
 
 class AxisData():
     def __init__(self):
@@ -155,7 +157,8 @@ class KeyMapper():
     
     def __init__(self, bindingFile, defaultProfileDirectory, userProfileDirectory,
                  eventObject, saveCallback, loadCallback,
-                 acceptKeyCombinations=False, useNegativeValuesForNegativeAxes = False):
+                 acceptKeyCombinations=False, useNegativeValuesForNegativeAxes = False,
+                 keyStateCallback = None):
         """Initialise the KeyMapper.
         
         Params: bindingFile -- The name of the file on disk in
@@ -174,7 +177,9 @@ class KeyMapper():
                                          modifier-based key-combinations are to
                                          be accepted. Defaults to False.
                 useNegativeValuesForNegativeAxes -- Whether negative axial inputs should
-                                                    produce negative key-values"""
+                                                    produce negative key-values
+                keyStateCallback -- An optional method that can be called when a key
+                                    -press or -release alters a key-map value"""
 
         """ Information on the save- and load- callbacks:
 
@@ -257,6 +262,8 @@ class KeyMapper():
         self.keys = {}        # Arranged like so: {key-name : state}
         self.keyBindings = {} # Arranged like so: {key-name : key-binding object}
         self.keyOrder = []    # Gives the order in which they keys should appear in the GUI list
+
+        self.keyStateCallback = keyStateCallback
         
         self.acceptKeyCombinations = acceptKeyCombinations
         if not acceptKeyCombinations:
@@ -351,7 +358,8 @@ class KeyMapper():
     Setting up KeyMapper:
     """
 
-    def addKey(self, description, defaultKey, defaultKeyDeviceType, keyType, callback = None, axisDirection = 0):
+    def addKey(self, description, defaultKey, defaultKeyDeviceType, keyType,
+               callback = None, axisDirection = 0, groupID = None):
         """Add a key to the list of controls managed by the KeyMapper.
 
         Params: description -- The name of the key (such as 'move forward' or 'shoot');
@@ -384,6 +392,12 @@ class KeyMapper():
         newBinding.defaultDeviceType = defaultKeyDeviceTypeStr
         newBinding.deviceType = defaultKeyDeviceTypeStr
         newBinding.axisDirection = axisDirection
+
+        if groupID is not None:
+            if not isinstance(groupID, BitMask32):
+                groupID = BitMask32(groupID)
+            newBinding.groupID = groupID
+
         self.keyBindings[description] = newBinding
 
         self.bindKey(description, defaultKey, keyType, callback, defaultKeyDeviceTypeStr, axisDirection)
@@ -397,7 +411,7 @@ class KeyMapper():
         # Build the error dialogue first, in case
         # something goes wrong...
         self.buildErrorGUI()
-        self.hideErrorDialogue()
+        self.errorDialogue.hide()
 
         self.loadKeyMapping()
         self.saveKeyMapping()
@@ -408,8 +422,14 @@ class KeyMapper():
         self.buildProfileSaveGUI()
 
         self.conflictDialogue.hide()
-        self.hideBindingDialogue()
-        self.hideProfileSaveDialogue()
+        self.profileSaveDialogue.hide()
+        self.bindingDialogue.hide()
+
+        self.bindingDialogueVisible = False
+
+        self.lastKeyInterception = None
+        self.lastKeyInterceptionDeviceType = None
+        self.lastKeyInterceptionValue = 0
 
         # This works around the potential issue of
         # the dialogue's modal nature being overridden
@@ -948,14 +968,15 @@ class KeyMapper():
         direction = 0
 
         if keyDescription is not None:
-            binding = self.keyBindings[keyDescription].binding
-            if binding is not None:
-                if binding.lower().startswith("axis."):
-                    for axisData in self.axesInUse:
-                        if axisData.keyDescriptionPositive == keyDescription:
-                            direction = 1
-                        elif axisData.keyDescriptionNegative == keyDescription:
-                            direction = -1
+            if keyDescription in self.keyBindings:
+                binding = self.keyBindings[keyDescription].binding
+                if binding is not None:
+                    if binding.lower().startswith("axis."):
+                        for axisData in self.axesInUse:
+                            if axisData.keyDescriptionPositive == keyDescription:
+                                direction = 1
+                            elif axisData.keyDescriptionNegative == keyDescription:
+                                direction = -1
 
         return direction
 
@@ -970,30 +991,22 @@ class KeyMapper():
                 self.showErrorDialogue(IOError("No file-loading callback found!\n\nThe file\n" + str(self.bindingFile) + "\nwill thus not be loaded."))
                 return
 
-            for description, binding, deviceType in list(keySaveData):
+            for description, binding, deviceType, axisDirection in list(keySaveData):
                 bindingData = self.keyBindings[description]
-                bindingList.append((description, binding, bindingData.type, deviceType, bindingData.callback))
+                bindingList.append((description, binding, bindingData.type, deviceType, bindingData.callback, axisDirection))
             
             self.axesInUse = []
-            for axisStr, deadZone, deviceTypePositive, deviceTypeNegative, keyDescPositive, keyDescNegative in list(axisSaveData):
+            for axisStr, deadZone in list(axisSaveData):
                 axisData = AxisData()
                 axisData.axis = axisStr
-                axisData.deviceTypePositive = deviceTypePositive
-                axisData.deviceTypeNegative = deviceTypeNegative
-                axisData.keyDescriptionPositive = keyDescPositive
-                axisData.keyDescriptionNegative = keyDescNegative
                 axisData.deadZone = deadZone
-                self.axesInUse.append(axisData) 
+                self.axesInUse.append(axisData)
         except IOError as e:
-            self.showErrorDialogue(e)
+            vfs = VirtualFileSystem.getGlobalPtr()
+            if vfs.exists(self.bindingFile):
+                self.showErrorDialogue(e)
 
-        for keyDescription, binding, controlType, deviceType, callback in bindingList:
-            axisDirection = 0
-            for axisData in self.axesInUse:
-                if axisData.keyDescriptionPositive == keyDescription:
-                    axisDirection = 1
-                elif axisData.keyDescriptionNegative == keyDescription:
-                    axisDirection = -1
+        for keyDescription, binding, controlType, deviceType, callback, axisDirection in bindingList:
             self.bindKey(keyDescription, binding, controlType, callback,
                          deviceType, axisDirection)
 
@@ -1002,15 +1015,13 @@ class KeyMapper():
         
         keySaveData = []
         for keyDescription, keyBinding in list(self.keyBindings.items()):
-            dataList = [keyDescription, keyBinding.binding, keyBinding.deviceType]
+            dataList = [keyDescription, keyBinding.binding, keyBinding.deviceType, keyBinding.axisDirection]
             keySaveData.append(dataList)
 
         axisSaveData = []
         for axisData in self.axesInUse:
             dataList = [
                 axisData.axis, axisData.deadZone,
-                axisData.deviceTypePositive, axisData.deviceTypeNegative,
-                axisData.keyDescriptionPositive, axisData.keyDescriptionNegative
                         ]
             axisSaveData.append(dataList)
 
@@ -1239,6 +1250,9 @@ class KeyMapper():
         """The internal method used to manage keys that
         use the KEYMAP_HELD_KEY binding type"""
 
+        if self.keyStateCallback is not None:
+            self.keyStateCallback(description, value)
+
         self.keys[description] = value
 
     def cancelKeys(self):
@@ -1281,8 +1295,10 @@ class KeyMapper():
                     else:
                         self.lastKeyInterceptionDeviceType = self.getDeviceTypeString(InputDevice.DeviceClass.keyboard)
                 conflict = None
+                keyBeingBoundGroup = self.keyBindings[self.keyBeingBound].groupID
                 for keyDescription, keyBinding in list(self.keyBindings.items()):
-                    if keyBinding.binding == self.lastKeyInterception and keyDescription != self.keyBeingBound:
+                    if keyBinding.binding == self.lastKeyInterception and keyDescription != self.keyBeingBound and \
+                            keyBinding.groupID.hasBitsInCommon(keyBeingBoundGroup):
                         if keyBinding.binding.lower().startswith("axis."):
                             for axisData in self.axesInUse:
                                 if axisData.keyDescriptionPositive == keyDescription:
@@ -1512,11 +1528,11 @@ class KeyMapper():
         if keyDescription is None:
             return
         absValue = abs(value)
+        oldKeyState = abs(self.keys[keyDescription])
         keyBinding = self.keyBindings[keyDescription]
         binaryValue = False
         if keyBinding.type != KEYMAP_HELD_KEY:
             binaryValue = True
-            oldKeyState = abs(self.keys[keyDescription])
             if keyBinding.type == KEYMAP_EVENT_PRESSED:
                 if oldKeyState < 0.5 and absValue > 0.5:
                     keyBinding.callback(keyDescription)
@@ -1551,10 +1567,16 @@ class KeyMapper():
         else:
             if absValue < deadZoneVal:
                 self.keys[keyDescription] = 0
+                if keyBinding.type == KEYMAP_HELD_KEY and self.keyStateCallback is not None and oldKeyState != 0:
+                    self.keyStateCallback(keyDescription, False)
             elif self.negativeValuesForNegativeAxes:
                 self.keys[keyDescription] = value
+                if keyBinding.type == KEYMAP_HELD_KEY and self.keyStateCallback is not None and oldKeyState == 0:
+                    self.keyStateCallback(keyDescription, True)
             else:
                 self.keys[keyDescription] = absValue
+                if keyBinding.type == KEYMAP_HELD_KEY and self.keyStateCallback is not None and oldKeyState == 0:
+                    self.keyStateCallback(keyDescription, True)
 
     """""
     DESTROYING AND CLEANING UP
