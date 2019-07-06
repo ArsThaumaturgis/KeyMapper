@@ -26,9 +26,6 @@ from panda3d.core import BitMask32
 
 from direct.task import Task
 
-from DirectOptionMenuAware import DirectOptionMenuAware
-
-
 """The four types of key-binding curently supported. Respectively:
  * Event-released----------------a callback is called on key-release
  * Event-pressed-----------------a callback is called on key-press
@@ -511,7 +508,7 @@ class KeyMapper():
 
         frameBounds = self.list["frameSize"]
 
-        self.profileMenu = DirectOptionMenuAware(
+        self.profileMenu = DirectOptionMenu(
             parent = self.guiRoot,
             scale = self.buttonSize,
             pos = (0, 0, frameBounds[2] - self.buttonSize*2.0),
@@ -1486,13 +1483,14 @@ class KeyMapper():
                 for axis in device.axes:
                     value = axis.value
                     axisID = axis.axis
-                    axisIsPresent = axisID in self.deviceAxisTestValues[device]
-                    if (not axisIsPresent and abs(value) > 0.5) or \
-                            (axisIsPresent and abs(value - self.deviceAxisTestValues[device][axisID]) > 0.3):
-                        axisStr = str(axisID)
-                        self.keyInterception(self.getDeviceTypeString(device.device_class), axisStr, value)
-                        self.keyRelease(axisStr)
-                        return Task.cont
+                    if axisID != InputDevice.Axis.none:
+                        axisIsPresent = axisID in self.deviceAxisTestValues[device]
+                        if (not axisIsPresent and abs(value) > 0.5) or \
+                                (axisIsPresent and abs(value - self.deviceAxisTestValues[device][axisID]) > 0.3):
+                            axisStr = str(axisID)
+                            self.keyInterception(self.getDeviceTypeString(device.device_class), axisStr, value)
+                            self.keyRelease(axisStr)
+                            return Task.cont
         else:
             for axisData in self.axesInUse:
                 axisStr = axisData.axis
@@ -1533,29 +1531,9 @@ class KeyMapper():
         binaryValue = False
         if keyBinding.type != KEYMAP_HELD_KEY:
             binaryValue = True
-            if keyBinding.type == KEYMAP_EVENT_PRESSED:
-                if oldKeyState < 0.5 and absValue > 0.5:
-                    keyBinding.callback(keyDescription)
-            elif keyBinding.type == KEYMAP_EVENT_RELEASED:
-                if oldKeyState > 0.5 and absValue < 0.5:
-                    keyBinding.callback(keyDescription)
-            elif keyBinding.type == KEYMAP_EVENT_PRESSED_AND_RELEASED:
-                if oldKeyState < 0.5:
-                    if absValue > 0.5:
-                        if isinstance(keyBinding.callback, list) or isinstance(keyBinding.callback, tuple):
-                            keyBinding.callback[0](keyDescription)
-                        else:
-                            keyBinding.callback(keyDescription, KEYMAP_EVENT_PRESSED)
-                elif oldKeyState > 0.5:
-                    if absValue < 0.4:
-                        if isinstance(keyBinding.callback, list) or isinstance(keyBinding.callback, tuple):
-                            keyBinding.callback[0](keyDescription)
-                        else:
-                            keyBinding.callback(keyDescription, KEYMAP_EVENT_RELEASED)
 
         if binaryValue:
-            result = 0
-            if absValue > 0.49:
+            if oldKeyState < 0.5 and absValue > 0.5:
                 if self.negativeValuesForNegativeAxes:
                     if value > 0:
                         result = 1
@@ -1563,7 +1541,28 @@ class KeyMapper():
                         result = -1
                 else:
                     result = 1
-            self.keys[keyDescription] = result
+                self.keys[keyDescription] = result
+
+                if keyBinding.type == KEYMAP_EVENT_PRESSED:
+                    keyBinding.callback(keyDescription)
+                elif keyBinding.type == KEYMAP_EVENT_PRESSED_AND_RELEASED:
+                    if isinstance(keyBinding.callback, list) or isinstance(keyBinding.callback, tuple):
+                        keyBinding.callback[0](keyDescription)
+                    else:
+                        keyBinding.callback(keyDescription, KEYMAP_EVENT_PRESSED)
+
+            elif oldKeyState > 0.5 and absValue < 0.5:
+                result = 0
+                self.keys[keyDescription] = result
+
+                if keyBinding.type == KEYMAP_EVENT_RELEASED:
+                    keyBinding.callback(keyDescription)
+                elif keyBinding.type == KEYMAP_EVENT_PRESSED_AND_RELEASED:
+                    if isinstance(keyBinding.callback, list) or isinstance(keyBinding.callback, tuple):
+                        keyBinding.callback[1](keyDescription)
+                    else:
+                        keyBinding.callback(keyDescription, KEYMAP_EVENT_RELEASED)
+
         else:
             if absValue < deadZoneVal:
                 self.keys[keyDescription] = 0
