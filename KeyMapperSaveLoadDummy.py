@@ -17,8 +17,6 @@
 ##                                                              ##
 ##################################################################
 
-from GameSaver.GameSaver import  GameSaver, SaveableWrapper
-
 class SaveLoadDummy():
     firstCallback = True
 
