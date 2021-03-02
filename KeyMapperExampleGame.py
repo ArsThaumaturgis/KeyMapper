@@ -138,12 +138,7 @@ class CustomisedKeyMapper(KeyMapper):
 
         frameBounds = self.list["frameSize"]
 
-        # "DirectOptionMenuAware" is a custom sub-class
-        # of Panda's "DirectOptionMenu" class, offering
-        # a few tweaks and additions to that class's
-        # behaviour. Feel free to use the base Panda-class
-        # if it suits your purposes!
-        self.profileMenu = DirectOptionMenuAware(
+        self.profileMenu = DirectOptionMenu(
             parent = self.guiRoot,
             scale = self.buttonSize*0.75,
             frameSize = (-4.7, 4.7, -1, 1.5),
