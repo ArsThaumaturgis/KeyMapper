@@ -9,6 +9,6 @@ Includes:
  
  Note that KeyMapper does not implement file -saving or -loading methods--the developer is expected to provide those, implemented to their preference. See the documentation-file for more information on this.
 
-For the license applied to the code in this repository, see the [LICENCE.md file](LICENSE.md) in the main respository directory.
+For the license applied to the code in this repository, see the [LICENSE.md file](LICENSE.md) in the main respository directory.
 
-For the license applied to the assets in this repository, see the [LICENCE.md file](AdvancedExampleFiles/LICENSE.md) that accompanies them in the "AdvancedExampleFiles" directory.
+For the license applied to the assets in this repository, see the [LICENSE.md file](AdvancedExampleFiles/LICENSE.md) that accompanies them in the "AdvancedExampleFiles" directory.
