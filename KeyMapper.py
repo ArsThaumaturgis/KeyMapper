@@ -260,6 +260,8 @@ class KeyMapper():
         self.keyBindings = {} # Arranged like so: {key-name : key-binding object}
         self.keyOrder = []    # Gives the order in which they keys should appear in the GUI list
 
+        self.keyMap = base.win.getKeyboardMap()
+
         self.keyStateCallback = keyStateCallback
         
         self.acceptKeyCombinations = acceptKeyCombinations
@@ -281,18 +283,20 @@ class KeyMapper():
         if not vfs.exists(self.defaultProfileDirectory):
             succeeded = vfs.makeDirectoryFull(self.defaultProfileDirectory)
             if not succeeded:
-                print ("Warning! Failed to create default profile directory: ", self.defaultProfileDirectory)
+                taskMgr.doMethodLater(0, self.showErrorDialogue, "Warning! Failed to create default profile directory: " + self.defaultProfileDirectory)
 
         if not vfs.exists(self.userProfileDirectory):
             succeeded = vfs.makeDirectoryFull(self.userProfileDirectory)
             if not succeeded:
-                print ("Warning! Failed to create user profile directory: ", self.userProfileDirectory)
+                taskMgr.doMethodLater(0, self.showErrorDialogue, "Warning! Failed to create user profile directory: " + self.userProfileDirectory)
 
         self.getAvailableProfiles()
 
         self.keyInterceptionEvents = [
             "keyInterception",
-            "keyRelease"
+            "keyRelease",
+            "keyInterceptionMouse",
+            "keyReleaseMouse"
         ]
         
         #  Button thrower and the two events registered below allow us to catch
@@ -300,6 +304,8 @@ class KeyMapper():
         self.buttonThrower = base.buttonThrowers[0].node()
         self.eventObject.accept("keyInterception", self.keyInterception, extraArgs = [None])
         self.eventObject.accept("keyRelease", self.keyRelease)
+        self.eventObject.accept("keyInterceptionMouse", self.keyInterceptionMouse, extraArgs = [None])
+        self.eventObject.accept("keyReleaseMouse", self.keyReleaseMouse)
 
         for deviceType in InputDevice.DeviceClass:
             if deviceType is not InputDevice.DeviceClass.keyboard and \
@@ -346,6 +352,12 @@ class KeyMapper():
 
         self.loadMappingCallback = loadCallback
         self.saveMappingCallback = saveCallback
+
+        self.controllerNotificationCallback = None
+
+        self.deviceTypesThatAreRaw = [
+            InputDevice.DeviceClass.keyboard
+        ]
 
     """""
     METHODS INTENDED FOR DEVELOPER-USE:
@@ -445,7 +457,9 @@ class KeyMapper():
 
         result = "<none set>"
         if binding is not None:
-            result = binding
+            result = self.keyMap.getMappedButtonLabel(binding)
+            if len(result) == 0:
+                result = binding
             if direction == 1:
                 result += " +"
             elif direction == -1:
@@ -862,6 +876,13 @@ class KeyMapper():
 
         if self.bindingDialogueVisible:
             self.setupEventsForDevice(controller)
+        else:
+            if self.controllerNotificationCallback is not None:
+                used = False
+                for keyBinding in self.keyBindings.values():
+                    if keyBinding.deviceType == deviceTypeToAddString:
+                        used = True
+                self.controllerNotificationCallback(controller, used)
 
     def disconnectController(self, controller):
         """A callback method that is called when a controller is removed
@@ -1097,6 +1118,12 @@ class KeyMapper():
 
         self.saveKeyMapping()
 
+    def getBindingEvents(self, binding, deviceType):
+        if deviceType in self.deviceTypesThatAreRaw:
+            return "raw-{0}".format(binding), "raw-{0}-up".format(binding)
+        else:
+            return "{0}".format(binding), "{0}-up".format(binding)
+
     def bindKey(self, keyDescription, binding, type, callback, deviceType, axisDirection = 0):
         """Set a new key-binding.
 
@@ -1127,23 +1154,25 @@ class KeyMapper():
                                  its negative direction (with a value of -1). If it's not an axis,
                                  then this should have a value of 0.
                 """
+        
+        bindingEventDown, bindingEventUp = self.getBindingEvents(binding, deviceType)
 
         self.clearKeyEvent(binding, axisDirection)
         self.clearKeyEvent(self.keyBindings[keyDescription].binding, self.keyBindings[keyDescription].axisDirection)
         if type == KEYMAP_HELD_KEY:
             if binding is not None:
-                self.eventObject.accept(binding, self.keyPressed, [keyDescription, 1])
-                self.eventObject.accept(binding+"-up", self.keyPressed, [keyDescription, 0])
+                self.eventObject.accept(bindingEventDown, self.keyPressed, [keyDescription, 1])
+                self.eventObject.accept(bindingEventUp, self.keyPressed, [keyDescription, 0])
         elif type == KEYMAP_EVENT_PRESSED:
             if callback is not None:
                 if binding is not None:
-                    self.eventObject.accept(binding, callback, [keyDescription])
+                    self.eventObject.accept(bindingEventDown, callback, [keyDescription])
             else:
                 raise Exception("Callback missing in attempt to bind key using \"pressed\" event.")
         elif type == KEYMAP_EVENT_RELEASED:
             if callback is not None:
                 if binding is not None:
-                    self.eventObject.accept(binding+"-up", callback, [keyDescription])
+                    self.eventObject.accept(bindingEventUp, callback, [keyDescription])
             else:
                 raise Exception("Callback missing in attempt to bind key using \"pressed\" event.")
         elif type == KEYMAP_EVENT_PRESSED_AND_RELEASED:
@@ -1156,13 +1185,13 @@ class KeyMapper():
                     raise Exception("Second callback missing in attempt to bind key using \"pressed\"- and \"released\"- events event.")
                 else:
                     if binding is not None:
-                        self.eventObject.accept(binding, callback[0], [keyDescription])
-                        self.eventObject.accept(binding+"-up", callback[1], [keyDescription])
+                        self.eventObject.accept(bindingEventDown, callback[0], [keyDescription])
+                        self.eventObject.accept(bindingEventUp, callback[1], [keyDescription])
             else:
                 if callback is not None:
                     if binding is not None:
-                        self.eventObject.accept(binding, callback, [keyDescription, KEYMAP_EVENT_PRESSED])
-                        self.eventObject.accept(binding+"-up", callback, [keyDescription, KEYMAP_EVENT_RELEASED])
+                        self.eventObject.accept(bindingEventDown, callback, [keyDescription, KEYMAP_EVENT_PRESSED])
+                        self.eventObject.accept(bindingEventUp, callback, [keyDescription, KEYMAP_EVENT_RELEASED])
                 else:
                     raise Exception("Callback missing in attempt to bind key using both \"pressed\"- and \"released\"- events.")
         self.keyBindings[keyDescription].binding = binding
@@ -1240,6 +1269,8 @@ class KeyMapper():
                 self.removeUsedDevice(deviceType)
         self.eventObject.ignore(binding)
         self.eventObject.ignore(binding+"-up")
+        self.eventObject.ignore("raw-"+binding)
+        self.eventObject.ignore("raw-"+binding+"-up")
 
         self.axesInUse = [axisData for axisData in self.axesInUse if axisData.keyDescriptionPositive is not None or axisData.keyDescriptionNegative is not None]
 
@@ -1257,6 +1288,11 @@ class KeyMapper():
         for description in self.keys:
             self.keys[description] = 0
 
+    def keyInterceptionMouse(self, deviceType, key, keyValue = 0):
+        """The event that handles mouse -button and -wheel "press" events, specifically. Used when binding keys."""
+        if "mouse" in key or "wheel" in key:
+            self.keyInterception(deviceType, key, keyValue)
+
     def keyInterception(self, deviceType, key, keyValue = 0):
         """The event that handles arbitrary key-presses, used when binding keys."""
 
@@ -1266,7 +1302,7 @@ class KeyMapper():
             else:
                 deviceType = self.getDeviceTypeString(InputDevice.DeviceClass.keyboard)
 
-        if self.acceptKeyCombinations or not "-" in key:
+        if self.acceptKeyCombinations or len(key) == 1 or not "-" in key:
             self.lastKeyInterceptionDeviceType = deviceType
             self.lastKeyInterception = key
             if keyValue > 0:
@@ -1274,6 +1310,11 @@ class KeyMapper():
             elif keyValue < 0:
                 keyValue = -1
             self.lastKeyInterceptionValue = keyValue
+
+    def keyReleaseMouse(self, key):
+        """The event that handles mouse -button and -wheel "release" events, specifically. Used when binding keys."""
+        if "mouse" in key or "wheel" in key:
+            self.keyRelease(key)
 
     def keyRelease(self, key):
         """The event that handles arbitrary key-releases, used when binding keys."""
@@ -1283,7 +1324,7 @@ class KeyMapper():
             # the assignment of key to lastKeyInterception just below it, are included to get
             # around an issue in which mouse-down events seem to not be sent while the dialogue
             # is visible. Should this issue be dealt with they should probably be removed.
-            if self.keyBeingBound is not None and (self.lastKeyInterception is not None or ("mouse" in key and (self.acceptKeyCombinations or not "-" in key))):
+            if self.keyBeingBound is not None and (self.lastKeyInterception is not None or (("mouse" in key or "wheel" in key) and (self.acceptKeyCombinations or len(key) == 1 or not "-" in key))):
                 if self.lastKeyInterception is None:
                     self.lastKeyInterception = key
                 if self.lastKeyInterceptionDeviceType is None:
@@ -1383,8 +1424,10 @@ class KeyMapper():
         """An internal method used to activate KeyMapper's
         listening for arbitrary button events."""
         
-        self.buttonThrower.setButtonDownEvent("keyInterception")
-        self.buttonThrower.setButtonUpEvent("keyRelease")
+        self.buttonThrower.setRawButtonDownEvent("keyInterception")
+        self.buttonThrower.setRawButtonUpEvent("keyRelease")
+        self.buttonThrower.setButtonDownEvent("keyInterceptionMouse")
+        self.buttonThrower.setButtonUpEvent("keyReleaseMouse")
 
         for deviceType in InputDevice.DeviceClass:
             if deviceType is not InputDevice.DeviceClass.keyboard and \
@@ -1392,8 +1435,12 @@ class KeyMapper():
                 thrower = ButtonThrower(str(deviceType))
                 deviceTypeString = self.getDeviceTypeString(deviceType)
                 thrower.setTag(DEVICE_TYPE_TAG, deviceTypeString)
-                thrower.setButtonDownEvent("keyInterception_"+deviceTypeString)
-                thrower.setButtonUpEvent("keyRelease")
+                if deviceType in self.deviceTypesThatAreRaw:
+                    thrower.setRawButtonDownEvent("keyInterception_"+deviceTypeString)
+                    thrower.setRawButtonUpEvent("keyRelease")
+                else:
+                    thrower.setButtonDownEvent("keyInterception_"+deviceTypeString)
+                    thrower.setButtonUpEvent("keyRelease")
                 self.deviceButtonThrowers[deviceTypeString] = thrower
 
         devicesAttachedForBinding = base.devices.getDevices()
@@ -1427,11 +1474,15 @@ class KeyMapper():
         """An internal method used to disable KeyMapper's
         listening for arbitrary button events."""
         
+        self.buttonThrower.setRawButtonDownEvent("")
+        self.buttonThrower.setRawButtonUpEvent("")
         self.buttonThrower.setButtonDownEvent("")
         self.buttonThrower.setButtonUpEvent("")
 
         for dataNP, thrower in self.dataNPList:
             thrower.clearTag(DEVICE_TYPE_TAG)
+            thrower.setRawButtonDownEvent("")
+            thrower.setRawButtonUpEvent("")
             thrower.setButtonDownEvent("")
             thrower.setButtonUpEvent("")
             self.clearBindingDataNPAndThrower(dataNP, thrower)
