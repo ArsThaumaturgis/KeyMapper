@@ -11,4 +11,6 @@ Includes:
 
 For the license applied to the code in this repository, see the [LICENSE.md file](LICENSE.md) in the main respository directory.
 
-For the license applied to the assets in this repository, see the [LICENSE.md file](AdvancedExampleFiles/LICENSE.md) that accompanies them in the "AdvancedExampleFiles" directory.
+For the license applied to the non-font assets in this repository, see the [LICENSE.md file](AdvancedExampleFiles/LICENSE.md) that accompanies them in the "AdvancedExampleFiles" directory.
+
+For the licence under which the font "Aileron" is distributed, see the text-file in "aileron.zip", which should be found in the "AdvancedExampleFiles/Font/" directory.
