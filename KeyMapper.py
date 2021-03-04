@@ -1119,7 +1119,11 @@ class KeyMapper():
         self.saveKeyMapping()
 
     def getBindingEvents(self, binding, deviceType):
-        if deviceType in self.deviceTypesThatAreRaw:
+        if isinstance(deviceType, str):
+            isRaw = deviceType in [self.getDeviceTypeString(devType) for devType in self.deviceTypesThatAreRaw]
+        else:
+            isRaw = deviceType in self.deviceTypesThatAreRaw
+        if isRaw:
             return "raw-{0}".format(binding), "raw-{0}-up".format(binding)
         else:
             return "{0}".format(binding), "{0}-up".format(binding)
