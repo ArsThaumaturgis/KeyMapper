@@ -1,0 +1,3 @@
+The font distributed in this directory is the work on "dotcolon" (dotcolon.net), and here redistributed thanks to the Creative Commons license under which "dotcolon" released it. 
+
+For more details, see the text-document in the zip-file that should be found in the directory alongside this file.

@@ -49,6 +49,7 @@ from KeyMapperSaveLoadDummy import SaveLoadDummy
 
 import random, math
 
+
 ### Constants
 
 # To start with, directories used by the game, and by KeyMapper.
@@ -144,6 +145,7 @@ class CustomisedKeyMapper(KeyMapper):
             frameSize = (-4.7, 4.7, -1, 1.5),
             pos = (0, 0, frameBounds[2] - self.buttonSize*1.5),
             text_align = TextNode.ACenter,
+            text_font = base.uiFont,
             command = self.loadProfile,
             items = list(self.profileDict.keys()),
             initialitem = -1,
@@ -182,7 +184,8 @@ class CustomisedKeyMapper(KeyMapper):
                                        loader.loadModel(ASSET_FILES + "uiButtonClicked"),
                                        loader.loadModel(ASSET_FILES + "uiButtonHovered"),
                                        loader.loadModel(ASSET_FILES + "uiButtonDisabled"),
-                                   ))
+                                   ),
+                                   text_font = base.uiFont)
 
     # A minor tweak to the default behaviour: we add a label
     # with the text "Controls:" above the main GUI.
@@ -194,7 +197,8 @@ class CustomisedKeyMapper(KeyMapper):
                                          relief = None,
                                          scale = 0.08,
                                          pos = (0, 0, 0.425),
-                                         text_fg = (0.13, 0.45, 0.25, 1))
+                                         text_fg = (0.13, 0.45, 0.25, 1),
+                                         text_font = base.uiFont)
 
     # Rework the main list-object that holds our key-binding buttons
     # Much as with the profile GUI-elements above, this just amounts
@@ -229,7 +233,8 @@ class CustomisedKeyMapper(KeyMapper):
                                  loader.loadModel(ASSET_FILES + "uiKeyBindClicked"),
                                  loader.loadModel(ASSET_FILES + "uiKeyBindHovered"),
                                  loader.loadModel(ASSET_FILES + "uiKeyBindDisabled"),
-                           ))
+                           ),
+                           text_font = base.uiFont)
 
         label = DirectLabel(text = self.getBindingName(bindingEntry.binding, axisDirection), parent = btn,
                             scale = 0.75,
@@ -581,6 +586,8 @@ class KeyMapperTestGame(ShowBase):
         self.gemTotal = 10
 
         # The game's UI
+        self.uiFont = loader.loadFont(GAME_DIRECTORY + "Font/Aileron-Regular.otf")
+
         self.btnClickSound = loader.loadSfx(ASSET_FILES + "uiClick.ogg")
 
         self.gemLabel = DirectLabel(text = "",
@@ -588,7 +595,8 @@ class KeyMapperTestGame(ShowBase):
                                     text_fg = (1, 1, 1, 1),
                                     text_align = TextNode.ALeft,
                                     pos = (0.01, 0, 0.03),
-                                    parent = self.a2dBottomLeft)
+                                    parent = self.a2dBottomLeft,
+                                    text_font = self.uiFont)
         self.gemLabel.hide()
 
         self.loseText = "You have died! D:\n\n(Press {0})"
@@ -601,7 +609,8 @@ class KeyMapperTestGame(ShowBase):
                                     frameColor = (0, 0, 0, 1),
                                     frameSize = (-7, 7, -2.25, 2.25),
                                     relief = DGG.FLAT,
-                                    pos = (0, 0, 0))
+                                    pos = (0, 0, 0),
+                                    text_font = self.uiFont)
         self.winLabel.hide()
 
         self.loseLabel = DirectLabel(text = self.loseText,
@@ -611,7 +620,8 @@ class KeyMapperTestGame(ShowBase):
                                     frameColor = (0, 0, 0, 1),
                                     frameSize = (-7, 7, -2.25, 2.25),
                                     relief = DGG.FLAT,
-                                    pos = (0, 0, 0))
+                                    pos = (0, 0, 0),
+                                    text_font = self.uiFont)
         self.loseLabel.hide()
 
         self.updateTask = taskMgr.add(self.update, "update")
@@ -626,7 +636,16 @@ class KeyMapperTestGame(ShowBase):
                                  pos = (0, 0, 0.85),
                                  relief = None,
                                  parent = self.mainMenu,
-                                 text_fg = (0.15, 0.7, 0.18, 1))
+                                 text_fg = (0.15, 0.7, 0.18, 1),
+                                 text_font = self.uiFont)
+
+        self.uiFontCredit = DirectLabel(text = "This game uses the font \"Aileron\", by dotcolon (dotcolon.net), under Creative Commons license CC0 1.0.",
+                                 scale = 0.05,
+                                 pos = (0, 0, -0.725),
+                                 relief = None,
+                                 parent = self.mainMenu,
+                                 text_fg = (0.1, 0.6, 0.15, 1),
+                                 text_font = self.uiFont)
 
         self.startBtn = DirectButton(text = "Start Game",
                                      parent = self.mainMenu,
@@ -641,7 +660,8 @@ class KeyMapperTestGame(ShowBase):
                                          loader.loadModel(ASSET_FILES + "uiButtonClicked"),
                                          loader.loadModel(ASSET_FILES + "uiButtonHovered"),
                                          loader.loadModel(ASSET_FILES + "uiButtonDisabled"),
-                                     ))
+                                     ),
+                                 text_font = self.uiFont)
 
         self.quitBtn = DirectButton(text = "Quit",
                                     parent = self.mainMenu,
@@ -656,7 +676,8 @@ class KeyMapperTestGame(ShowBase):
                                         loader.loadModel(ASSET_FILES + "uiButtonClicked"),
                                         loader.loadModel(ASSET_FILES + "uiButtonHovered"),
                                         loader.loadModel(ASSET_FILES + "uiButtonDisabled"),
-                                    ))
+                                    ),
+                                 text_font = self.uiFont)
 
         # KEYMAPPER STUFF! Here we instantiate our customised KeyMapper,
         # add some controls to it, call its setup method, and seat it in
