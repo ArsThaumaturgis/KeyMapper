@@ -1301,7 +1301,7 @@ class KeyMapper():
         """The event that handles arbitrary key-presses, used when binding keys."""
 
         if deviceType is None:
-            if key.startswith("mouse"):
+            if key.startswith("mouse") or key.startswith("wheel"):
                 deviceType = self.getDeviceTypeString(InputDevice.DeviceClass.mouse)
             else:
                 deviceType = self.getDeviceTypeString(InputDevice.DeviceClass.keyboard)
@@ -1332,7 +1332,7 @@ class KeyMapper():
                 if self.lastKeyInterception is None:
                     self.lastKeyInterception = key
                 if self.lastKeyInterceptionDeviceType is None:
-                    if self.lastKeyInterception.startswith("mouse"):
+                    if self.lastKeyInterception.startswith("mouse") or self.lastKeyInterception.startswith("wheel"):
                         self.lastKeyInterceptionDeviceType = self.getDeviceTypeString(InputDevice.DeviceClass.mouse)
                     else:
                         self.lastKeyInterceptionDeviceType = self.getDeviceTypeString(InputDevice.DeviceClass.keyboard)
